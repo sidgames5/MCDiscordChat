@@ -165,7 +165,7 @@ public class Main implements DedicatedServerModInitializer {
 			}
 		});
 
-		ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
 			MSPT_MONITOR_TIMER.cancel();
 			CHANNEL_TOPIC_MONITOR_TIMER.cancel();
 			CHECK_UPDATE_TIMER.cancel();
@@ -199,9 +199,8 @@ public class Main implements DedicatedServerModInitializer {
 				CHANNEL.sendMessage(Translations.translateMessage("message.serverStopped"))
 						.submit()
 						.whenComplete((v, ex) -> shutdown());
-			} else {
-				shutdown();
 			}
+			shutdown();
 		});
 	}
 
